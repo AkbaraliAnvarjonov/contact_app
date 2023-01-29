@@ -26,9 +26,10 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
 
   updateContact(UpdateContact event, Emitter<ContactsState> emit) async {
     emit(state.copyWith(status: ContactStatus.loading));
-    var updatedId = await contacstRepository.updateContact(id: event.id);
+    var updatedId = await contacstRepository.updateContact(
+        contactModel: event.contactModel);
     if (updatedId != -1) {
-      emit(state.copyWith(status: ContactStatus.contactAdded));
+      emit(state.copyWith(status: ContactStatus.contactUptaded));
     }
   }
 
@@ -36,7 +37,7 @@ class ContactsBloc extends Bloc<ContactsEvent, ContactsState> {
     emit(state.copyWith(status: ContactStatus.loading));
     var deleteId = await contacstRepository.deleteContact(id: event.contactId);
     if (deleteId != -1) {
-      emit(state.copyWith(status: ContactStatus.contactAdded));
+      emit(state.copyWith(status: ContactStatus.contactDeleted));
     }
   }
 }

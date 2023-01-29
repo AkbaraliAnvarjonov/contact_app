@@ -10,15 +10,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 TextEditingController nameController = TextEditingController();
 TextEditingController numberController = TextEditingController();
 
-class AddContactsPage extends StatelessWidget {
-  
-  const AddContactsPage({super.key});
+class UpdateContactsPage extends StatelessWidget {
+  ContactModel contactModel;
+  UpdateContactsPage({
+    super.key,
+    required this.contactModel,
+  });
 
   @override
   Widget build(BuildContext context) {
-  
+    nameController.text = contactModel.name;
+    numberController.text = contactModel.number;
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Contact")),
+      appBar: AppBar(title: const Text("Update Contact")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -42,18 +46,19 @@ class AddContactsPage extends StatelessWidget {
                     if (nameController.text.isNotEmpty &&
                         numberController.text.isNotEmpty) {
                       BlocProvider.of<ContactsBloc>(context).add(
-                        AddContact(
-                          contactModel: ContactModel(
-                              name: nameController.text,
-                              date: DateTime.now().toString(),
-                              number: numberController.text),
-                        ),
+                        UpdateContact(
+                            contactModel: ContactModel(
+                          date: DateTime.now().toString(),
+                          name: nameController.text,
+                          number: numberController.text,
+                          id: contactModel.id,
+                        )),
                       );
                     }
                   },
                   child: const Text("Add"));
             }, listener: (context, state) {
-              if (state.status == ContactStatus.contactAdded) {
+              if (state.status == ContactStatus.contactUptaded) {
                 BlocProvider.of<GetContactsBloc>(context)
                     .add(FetchContactsInfo());
                 Navigator.pop(context);

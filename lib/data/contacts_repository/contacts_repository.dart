@@ -5,8 +5,8 @@ class ContacstRepository {
   Future<List<ContactModel>> loadContacts() => LocalDatabase.getList();
   Future<int> deleteContact({required int id}) =>
       LocalDatabase.deleteContactById(id);
-  Future updateContact({required int id}) =>
-      LocalDatabase.deleteContactById(id);
+  Future updateContact({required ContactModel contactModel}) =>
+      LocalDatabase.updateContactById(contactModel);
 
   Future<ContactModel> addContact(ContactModel contactModel) =>
       LocalDatabase.insertContactDatabase(contactModel);

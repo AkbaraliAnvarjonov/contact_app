@@ -4,6 +4,7 @@ import 'package:contact_app/bloc/get_contacts_bloc/get_contact_bloc.dart';
 import 'package:contact_app/bloc/get_contacts_bloc/get_contact_event.dart';
 import 'package:contact_app/bloc/get_contacts_bloc/get_contact_state.dart';
 import 'package:contact_app/ui/add_contact_page/add_contacts_page.dart';
+import 'package:contact_app/ui/update_contact_page.dart/update_contacts_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,15 @@ class ContactsPage extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateContactsPage(
+                            contactModel: state.contacts[index],
+                          ),
+                        ));
+                  },
                   title: Text(state.contacts[index].name),
                   subtitle: Text(state.contacts[index].number),
                   trailing: IconButton(
